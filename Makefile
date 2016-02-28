@@ -1,8 +1,8 @@
-CXXFLAGS = --std=c++0x
+CXXFLAGS = --std=c++11
 LFLAGS = -lncurses
 CXX = g++
 OUTFILE = breakout
-FILES = block.cpp breakout.cpp panel.cpp main.cpp 
+FILES = block.cpp breakout.cpp main.cpp 
 
 all: 
 	$(CXX) $(CXXFLAGS) $(FILES) $(LFLAGS) -o $(OUTFILE) 

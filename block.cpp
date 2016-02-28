@@ -95,5 +95,87 @@ void Circle::draw(){ attron(COLOR_PAIR(getColor()));
 
 }
 
+Panel::Panel(bool fill, int y, int x, int l): Block(fill,0,0,3), x(x), y(y), length(l) {}
 
+Panel::~Panel(){}
 
+void Panel::draw(){ 
+    int col = getColor();
+    getmaxyx(stdscr, maxY,maxX);
+    mvhline( y , x , (char)32 , length );
+}
+
+void Panel::left(){
+    int start = x;
+    if( start != 2 )
+        x--;
+}
+void Panel::right(){
+    int end = x+length;
+    if( end != maxX-2 )
+        x++;
+}
+
+Ball::Ball(int _y, int _x, signed int d, Panel * player): Block(true, _y, _x, 3), direction(d), y(_y),x(_x) {}
+
+void Ball::draw(){
+    int maxY,maxX;
+    getmaxyx(stdscr, maxY,maxX);
+    if ( x >= maxX-1 )
+        reflectRight();
+    if ( x <= 1 )
+        reflectLeft();
+    if ( y <= 1 )
+        reflectTop();
+    if ( y >= maxY-1 )
+        reflectBottom();
+    switch(direction){
+        case 1:
+            x++;
+            y--;
+            break;
+        case 2:
+            x++;
+            y++;
+            break;
+        case -1:
+            x--;
+            y--;
+            break;
+        case -2:
+            x--;
+            y++;
+            break;
+        case 0:
+
+            break;
+    }
+
+    attron(COLOR_PAIR(1));
+    mvaddch(y,x,(char)79);
+    attroff(COLOR_PAIR(1));
+}
+
+void Ball::start(){
+        direction = -1;
+}
+
+bool Ball::started(){
+    if (direction !=0)
+        return true;
+    return false;
+}
+
+void Ball::reflectTop(){
+    direction*=2;
+}
+
+void Ball::reflectLeft(){
+    direction*=-1;
+}
+void Ball::reflectRight(){
+    direction+=-1;
+}
+void Ball::reflectBottom(){
+    direction/=2;
+}

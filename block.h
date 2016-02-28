@@ -5,9 +5,9 @@
 
 class Block {
     bool* filled;
+    int* COLOR;
     int y;
     int x;
-    int* COLOR;
 public:
     Block(bool fill, float yi, float xi, int ci);
     ~Block();
@@ -35,6 +35,36 @@ public:
     Circle(bool fill, int y, int x, int r, int COLOR);
     ~Circle();
     void draw();
+};
+
+class Panel : public Block {
+    int maxY,maxX;
+public:
+    int y;
+    int x;
+    int length;
+    Panel(bool filled, int y, int x, int l);
+    ~Panel();
+    void left();
+    void right();
+    void draw();
+};
+
+class Ball : public Block {
+    signed int direction;
+    Panel * panel;
+public:
+    int y;
+    int x;
+    Ball(int _y, int _x, signed int d, Panel * player);
+    ~Ball();
+    bool started();
+    void draw();
+    void start();
+    void reflectTop();
+    void reflectBottom();
+    void reflectLeft();
+    void reflectRight();
 };
 
 #endif

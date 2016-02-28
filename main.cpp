@@ -1,6 +1,37 @@
 #include "breakout.h"
 
+BreakOut game;
+
 int main(){
-    BreakOut game;
-    return 0;
+    int finished = 0;
+
+
+
+    int key = ' ';
+    while( !finished ){
+        int key;
+        if( ( key = getch() ) != ERR )
+            switch( key ){
+                case KEY_LEFT:
+                case 'h':
+                case 'H':
+                    game.panel -> left();
+                    break;
+                case KEY_RIGHT:
+                case 'l':
+                case 'L':
+                    game.panel -> right();
+                    break;
+                case ' ':
+                    if (!game.ball -> started())
+                    game.ball -> start(); 
+                    break;
+                case 'q':
+                case 'Q':
+                    return 0;
+                    break;
+            }
+        game.draw();
+    }
+    endwin();
 }
