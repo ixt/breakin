@@ -116,7 +116,11 @@ void Panel::right(){
         x++;
 }
 
-Ball::Ball(int _y, int _x, signed int d, Panel * player): Block(true, _y, _x, 3), direction(d), y(_y),x(_x), panel(player){}
+Ball::Ball(int _y, int _x, signed int d, Panel * player): Block(true, _y, _x, 3), direction(d), y(_y), panel(player){
+    
+    x = panel -> x + (rand()%panel->length);
+
+}
 
 void Ball::draw(){
     int maxY, maxX;
@@ -173,16 +177,28 @@ bool Ball::started(){
 }
 
 void Ball::reflectTop(){
-    direction*=2;
+    if (direction == 1)
+        direction = 2;
+    if (direction == -1)
+        direction = -2;
 }
 
 void Ball::reflectLeft(){
-    direction*=-1;
+    if (direction == -1)
+        direction = 1;
+    if (direction == -2)
+        direction = 2;
 }
 void Ball::reflectRight(){
-    direction+=-1;
+    if (direction == 1)
+        direction = -1;
+    if (direction == 2)
+        direction = -2;
 }
 void Ball::reflectBottom(){
-    direction/=2;
+    if (direction == -2)
+        direction = -1;
+    if (direction == 2)
+        direction = 1;
 }
 
