@@ -11,6 +11,7 @@
 class Brick;
 class Panel;
 class Ball;
+class Tile;
 
 class BreakOut{
     int maxX;
@@ -24,6 +25,7 @@ public:
     Brick * frameOut;
     Panel * panel;
     Ball * ball;
+    std::vector<Tile *> tiles;
 };
 
 #endif

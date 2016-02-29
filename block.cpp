@@ -32,6 +32,8 @@ Brick::Brick(bool fill, int y, int x, int w, int COLOR): Block(fill, y, x,COLOR)
 
 Brick::Brick(bool fill, int y, int x, int h, int w, int COLOR): Block(fill, y, x,COLOR), width(w), height(h){}
 
+Brick::Brick(int y, int x, int COLOR): Block(false, y, x, COLOR), width(10),height(2){}
+
 Brick::~Brick(){
     //cout << "Rectangle Destroyed" << endl;
 }
@@ -116,7 +118,7 @@ void Panel::right(){
         x++;
 }
 
-Ball::Ball(int _y, int _x, signed int d, Panel * player): Block(true, _y, _x, 3), direction(d), y(_y), panel(player){
+Ball::Ball(int _y, int _x, signed int d, Panel * player, int color): Block(true, _y, _x, 3), direction(d), y(_y), panel(player), col(color){
     
     x = panel -> x + (rand()%panel->length);
 
@@ -126,13 +128,13 @@ void Ball::draw(){
     int maxY, maxX;
 
     getmaxyx(stdscr, maxY,maxX);
-    if ( x >= maxX-1 || ( x == panel -> x - 1 && y == panel -> y ))
+    if ( x >= maxX-3 || ( x == panel -> x - 1 && y == panel -> y ))
         reflectRight();
-    if ( x <= 1 || ( x == panel -> x + panel -> length + 1 && y == panel -> y ))
+    if ( x <= 2 || ( x == panel -> x + panel -> length + 1 && y == panel -> y ))
         reflectLeft();
     if ( y <= 1 || ( x >= panel -> x - 1  && x <= panel -> x + panel -> length + 1 && y == panel -> y + 1 && direction != 0))
         reflectTop();
-    if ( y >= maxY-1 || ( x >= panel -> x - 1 && x <= panel -> x + panel -> length + 1 && y == panel -> y - 1 && moves > 3))
+    if ( y >= maxY-2 || ( x >= panel -> x - 1 && x <= panel -> x + panel -> length + 1 && y == panel -> y - 1 && moves > 3))
         reflectBottom();
     switch(direction){
         case 1:
@@ -160,9 +162,9 @@ void Ball::draw(){
             break;
     }
 
-    attron(COLOR_PAIR(1));
+    attron(COLOR_PAIR(col));
     mvaddch(y,x,(char)79);
-    attroff(COLOR_PAIR(1));
+    attroff(COLOR_PAIR(col));
 }
 
 void Ball::start(){
@@ -202,3 +204,24 @@ void Ball::reflectBottom(){
         direction = 1;
 }
 
+Tile::Tile(int _y, int _x, int color): Brick(_y, _x,color), col(color), x(_x), y(_y) {
+    // this is where the file grabbing code would be
+}
+
+Tile::~Tile(){}
+
+void Tile::draw(){
+    int maxY, maxX;
+    getmaxyx(stdscr, maxY, maxX);
+
+    attron(COLOR_PAIR(col));
+    mvhline(y,x,(char)32,10);
+    mvhline(y+1,x,(char)32,10);
+    attroff(COLOR_PAIR(col));
+}
+
+bool Tile::collision(int _y, int _x){
+    if ( _y >= y-1 && _y <= y + 2 && _x >= x -1 && _x <= x + 11)
+     return true;   
+    return false;
+}

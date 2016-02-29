@@ -21,10 +21,10 @@ public:
 class Brick : public Block {
     int width;
     int height;
-    bool broken=false;
 public:
     Brick(bool fill, int y, int x, int w, int COLOR);
     Brick(bool fill, int y, int x, int h, int w, int COLOR);
+    Brick(int y, int x, int COLOR);
     ~Brick();
     void draw();
 };
@@ -56,8 +56,9 @@ class Ball : public Block {
 public:
     int y;
     int x;
+    int col;
     int moves;
-    Ball(int _y, int _x, signed int d, Panel * player);
+    Ball(int _y, int _x, signed int d, Panel * player, int color);
     ~Ball();
     bool started();
     void draw();
@@ -66,6 +67,17 @@ public:
     void reflectBottom();
     void reflectLeft();
     void reflectRight();
+};
+
+class Tile : public Brick {
+public:
+    int x;
+    int y;
+    int col;
+    Tile(int _y=rand()%20, int _x=rand()%20, int col=rand()%5);
+    ~Tile();
+    void draw();
+    bool collision(int y, int x);
 };
 
 #endif
