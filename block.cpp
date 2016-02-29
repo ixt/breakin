@@ -116,35 +116,40 @@ void Panel::right(){
         x++;
 }
 
-Ball::Ball(int _y, int _x, signed int d, Panel * player): Block(true, _y, _x, 3), direction(d), y(_y),x(_x) {}
+Ball::Ball(int _y, int _x, signed int d, Panel * player): Block(true, _y, _x, 3), direction(d), y(_y),x(_x), panel(player){}
 
 void Ball::draw(){
-    int maxY,maxX;
+    int maxY, maxX;
+
     getmaxyx(stdscr, maxY,maxX);
-    if ( x >= maxX-1 )
+    if ( x >= maxX-1 || ( x == panel -> x - 1 && y == panel -> y ))
         reflectRight();
-    if ( x <= 1 )
+    if ( x <= 1 || ( x == panel -> x + panel -> length + 1 && y == panel -> y ))
         reflectLeft();
-    if ( y <= 1 )
+    if ( y <= 1 || ( x >= panel -> x - 1  && x <= panel -> x + panel -> length + 1 && y == panel -> y + 1 && direction != 0))
         reflectTop();
-    if ( y >= maxY-1 )
+    if ( y >= maxY-1 || ( x >= panel -> x - 1 && x <= panel -> x + panel -> length + 1 && y == panel -> y - 1 && moves > 3))
         reflectBottom();
     switch(direction){
         case 1:
             x++;
             y--;
+            moves++;
             break;
         case 2:
             x++;
             y++;
+            moves++;
             break;
         case -1:
             x--;
             y--;
+            moves++;
             break;
         case -2:
             x--;
             y++;
+            moves++;
             break;
         case 0:
 
@@ -158,6 +163,7 @@ void Ball::draw(){
 
 void Ball::start(){
         direction = -1;
+        moves++;
 }
 
 bool Ball::started(){
@@ -179,3 +185,4 @@ void Ball::reflectRight(){
 void Ball::reflectBottom(){
     direction/=2;
 }
+

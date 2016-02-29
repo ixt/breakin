@@ -56,6 +56,7 @@ class Ball : public Block {
 public:
     int y;
     int x;
+    int moves;
     Ball(int _y, int _x, signed int d, Panel * player);
     ~Ball();
     bool started();
