@@ -4,7 +4,6 @@ BreakOut game;
 
 int main(){
     int finished = 0;
-
     int key = ' ';
     while( !finished ){
         int key;
@@ -26,7 +25,7 @@ int main(){
                     break;
                 case 'p':
                 case 'P':
-                    game.tiles.push_back(new Tile());
+                    game.addTile();
                     break;
                 case 'q':
                 case 'Q':

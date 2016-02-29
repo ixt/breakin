@@ -104,7 +104,9 @@ Panel::~Panel(){}
 void Panel::draw(){ 
     int col = getColor();
     getmaxyx(stdscr, maxY,maxX);
+    attron(COLOR_PAIR(col));
     mvhline( y , x , (char)32 , length );
+    attroff(COLOR_PAIR(col));
 }
 
 void Panel::left(){

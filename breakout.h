@@ -26,6 +26,7 @@ public:
     Panel * panel;
     Ball * ball;
     std::vector<Tile *> tiles;
+    void addTile();
 };
 
 #endif

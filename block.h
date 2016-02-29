@@ -74,7 +74,7 @@ public:
     int x;
     int y;
     int col;
-    Tile(int _y=rand()%20, int _x=rand()%20, int col=rand()%5);
+    Tile(int _y=20, int _x=20, int col=1+(rand()%4));
     ~Tile();
     void draw();
     bool collision(int y, int x);
