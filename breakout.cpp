@@ -53,15 +53,15 @@ void BreakOut::update(){
 void BreakOut::addTile(){
     int maxX,maxY;
     getmaxyx(stdscr,maxY,maxX);
-    maxX =60;
-    maxY =30;
-    int addX = 3 + (rand()%(maxX-15));
-    int addY = 5 + (rand()%(maxY-20));
+    maxX = 60;
+    maxY = 30;
+    int addX = 3 + (rand()%54);
+    int addY = 5 + (rand()%20);
     int i = 0;
     while ( i < tiles.size()){
          if (!tiles.empty() && tiles[i] ->collision(addY,addX)){
-            addX = 3 + (rand()%maxX-3);
-            addY = 3 + (rand()%maxY-3);
+            addX = 3 + (rand()%54);
+            addY = 5 + (rand()%20);
             i = 0;
          }
       i++;

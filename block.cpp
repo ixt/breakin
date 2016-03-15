@@ -131,6 +131,11 @@ Ball::Ball(int _y, int _x, signed int d, Panel * player, int color): Block(true,
 void Ball::draw(){
     int maxY, maxX;
 
+    if (!started()){
+        x = panel -> x + panel -> length /2;
+        y = panel -> y - 1;
+    }
+
     getmaxyx(stdscr, maxY,maxX);
     maxX =60;
     maxY =30;
