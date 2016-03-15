@@ -36,3 +36,5 @@ int main(){
     }
     endwin();
 }
+
+

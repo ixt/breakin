@@ -104,6 +104,8 @@ Panel::~Panel(){}
 void Panel::draw(){ 
     int col = getColor();
     getmaxyx(stdscr, maxY,maxX);
+    maxX =60;
+    maxY =30;
     attron(COLOR_PAIR(col));
     mvhline( y , x , (char)32 , length );
     attroff(COLOR_PAIR(col));
@@ -130,6 +132,8 @@ void Ball::draw(){
     int maxY, maxX;
 
     getmaxyx(stdscr, maxY,maxX);
+    maxX =60;
+    maxY =30;
     if ( x >= maxX-3 || ( x == panel -> x - 1 && y == panel -> y ))
         reflectRight();
     if ( x <= 2 || ( x == panel -> x + panel -> length + 1 && y == panel -> y ))
@@ -215,15 +219,16 @@ Tile::~Tile(){}
 void Tile::draw(){
     int maxY, maxX;
     getmaxyx(stdscr, maxY, maxX);
+    maxX =60;
+    maxY =30;
 
     attron(COLOR_PAIR(col));
-    mvhline(y,x,(char)32,10);
-    mvhline(y+1,x,(char)32,10);
+    mvhline(y,x,(char)32,3);
     attroff(COLOR_PAIR(col));
 }
 
 bool Tile::collision(int _y, int _x){
-    if ( _y >= y-1 && _y <= y + 2 && _x >= x -1 && _x <= x + 11)
+    if ( _y == y && _x >= x && _x <= x + 2)
      return true;   
     return false;
 }
