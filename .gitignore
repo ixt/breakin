@@ -1,2 +1,4 @@
 breakout
 .ycm*
+bin/*
+src/*.o
