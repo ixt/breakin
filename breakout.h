@@ -27,6 +27,7 @@ public:
     Ball * ball;
     std::vector<Tile *> tiles;
     void addTile();
+    void startScreen();
 };
 
 #endif

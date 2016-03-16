@@ -43,8 +43,10 @@ void BreakOut::draw(){
             tiles[i] -> draw();
         }
     ball -> draw();
+    
+    if(!ball -> started())
+        startScreen();
 }
-
 
 void BreakOut::update(){
     
@@ -55,16 +57,43 @@ void BreakOut::addTile(){
     getmaxyx(stdscr,maxY,maxX);
     maxX = 60;
     maxY = 30;
-    int addX = 3 + (rand()%54);
-    int addY = 5 + (rand()%20);
+    int addX = 3 + (rand()%52);
+    int addY = 3 + (rand()%15);
     int i = 0;
     while ( i < tiles.size()){
          if (!tiles.empty() && tiles[i] ->collision(addY,addX)){
-            addX = 3 + (rand()%54);
-            addY = 5 + (rand()%20);
+            addX = 3 + (rand()%52);
+            addY = 3 + (rand()%15);
             i = 0;
          }
       i++;
      }
     tiles.push_back(new Tile(addY,addX,1+rand()%4));
+}
+
+void BreakOut::startScreen(){
+    Circle * circle = new Circle(false,12,30,10,4);
+    circle -> draw();
+
+    
+    
+    attron(COLOR_PAIR(1));
+    mvprintw(5,15, "    ___               __    _     ");
+    mvprintw(6,15, "   / _ )_______ ___ _/ /__ (_)__  ");
+    mvprintw(7,15, "  / _  / __/ -_) _ `/  '_// / _ \\ ");
+    mvprintw(8,15, " /____/_/  \\__/\\_,_/_/\\_\\/_/_//_/ ");
+    mvprintw(9,15, "                                  ");
+    attroff(COLOR_PAIR(1));
+
+    attron(COLOR_PAIR(3));
+    mvprintw(10,16, " This is a version of Breakout ");
+    mvprintw(11,18,  " avoid hitting the blocks ");
+    mvprintw(12,18,  " until the timer runs out ");
+    mvprintw(13,15, " a file will be deleted for each ");
+    mvprintw(14,22,       " block destroyed ");
+    attroff(COLOR_PAIR(3));
+    attron(COLOR_PAIR(1));
+    mvprintw(15,19,    " space to start, arrows ");
+    mvprintw(16,18,   " h & l or a & d for panel ");
+    attroff(COLOR_PAIR(1));
 }
