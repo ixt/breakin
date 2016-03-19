@@ -29,6 +29,7 @@ int main(){
                     break;
                 case 'q':
                 case 'Q':
+                    endwin();
                     return 0;
                     break;
             }
