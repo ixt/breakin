@@ -53,12 +53,14 @@ public:
 class Ball : public Block {
     signed int direction;
     Panel * panel;
+    int * frameX;
+    int * frameY;
 public:
     int y;
     int x;
     int col;
     int moves;
-    Ball(int _y, int _x, signed int d, Panel * player, int color);
+    Ball(int _y, int _x, signed int d, Panel * player,int * _frameX, int * _frameY, int color);
     ~Ball();
     bool started();
     void draw();

@@ -1,6 +1,8 @@
 #include <vector>
 #include <cstdlib>
-#include <math.h>
+#include <ctime>
+#include <cmath>
+#include <sstream>
 #include <iostream>
 #include <ncurses.h>
 #include "block.h"
@@ -16,6 +18,8 @@ class Tile;
 class BreakOut{
     int maxX;
     int maxY;
+    time_t rawTime;
+    struct tm * timeInfo;
 public:
     void start();
     void draw();

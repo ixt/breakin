@@ -103,9 +103,6 @@ Panel::~Panel(){}
 
 void Panel::draw(){ 
     int col = getColor();
-    getmaxyx(stdscr, maxY,maxX);
-    maxX =60;
-    maxY =30;
     attron(COLOR_PAIR(col));
     mvhline( y , x , (char)32 , length );
     attroff(COLOR_PAIR(col));
@@ -122,31 +119,28 @@ void Panel::right(){
         x++;
 }
 
-Ball::Ball(int _y, int _x, signed int d, Panel * player, int color): Block(true, _y, _x, 3), direction(d), y(_y), panel(player), col(color){
+Ball::Ball(int _y, int _x, signed int d, Panel * player, int * _frameX, int * _frameY, int color): Block(true, _y, _x, 3), direction(d), y(_y), frameX(_frameX), frameY(_frameY), panel(player), col(color){
     
     x = panel -> x + (rand()%panel->length);
 
 }
 
 void Ball::draw(){
-    int maxY, maxX;
 
     if (!started()){
         x = panel -> x + panel -> length /2;
         y = panel -> y - 1;
     }
 
-    getmaxyx(stdscr, maxY,maxX);
-    maxX =60;
-    maxY =30;
-    if ( x >= maxX-3 || ( x == panel -> x - 1 && y == panel -> y ))
+    if ( x >= *frameX-3 || ( x == panel -> x - 1 && y == panel -> y ))
         reflectRight();
     if ( x <= 2 || ( x == panel -> x + panel -> length + 1 && y == panel -> y ))
         reflectLeft();
     if ( y <= 1 || ( x >= panel -> x - 1  && x <= panel -> x + panel -> length + 1 && y == panel -> y + 1 && direction != 0))
         reflectTop();
-    if ( y >= maxY-2 || ( x >= panel -> x - 1 && x <= panel -> x + panel -> length + 1 && y == panel -> y - 1 && moves > 3))
+    if ( y >= *frameY-2 || ( x >= panel -> x - 1 && x <= panel -> x + panel -> length + 1 && y == panel -> y - 1 && moves > 3))
         reflectBottom();
+
     switch(direction){
         case 1:
             x++;
@@ -222,11 +216,6 @@ Tile::Tile(int _y, int _x, int color): Brick(_y, _x,color), col(color), x(_x), y
 Tile::~Tile(){}
 
 void Tile::draw(){
-    int maxY, maxX;
-    getmaxyx(stdscr, maxY, maxX);
-    maxX =60;
-    maxY =30;
-
     attron(COLOR_PAIR(col));
     mvhline(y,x,(char)32,3);
     attroff(COLOR_PAIR(col));
