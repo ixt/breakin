@@ -17,9 +17,10 @@ class File {
         File(std::string directoryOfChoice =".", bool * endGameBool= (new bool)); 
 
         std::vector<std::string> files;
-        std::vector<std::string> unfortunateFiles;
+        std::vector<bool> goneFiles;
         void addRandomFile();
         void deleteFile(std::string* unfortunateFile);
+        
         
         void drawFiles(int * frameX);
 };

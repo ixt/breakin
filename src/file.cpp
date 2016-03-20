@@ -42,6 +42,7 @@ File::File(std::string directoryOfChoice, bool * endGameBool){
         pathLocation++;
     }
     std::cout << paths -> size();
+    goneFiles.resize(paths -> size(),false);
 }
 
 void File::drawFiles(int * frameX){
@@ -62,15 +63,17 @@ void File::deleteFile(std::string * unfortunateFile){
     };
     for (int i = 0; i < files.size(); i++){
         if(strcmp(files[i].c_str(),unfortunateFile -> c_str())==0){
+
             // the code to delete files //////////////////////////////////////////////////
             
             // std::remove(files[i].c_str());
             
             // end code to delete files //////////////////////////////////////////////////
             
-            const char * strikeOut = u8"\u0336";
-            if((const char *)&files[i].c_str()[3] != strikeOut)
-            strike(files[i]);
+            if (!goneFiles[i]){ // if file hasnt already been deleted, then go on!
+                strike(files[i]);
+                goneFiles[i] = true;
+            }
         }
     }
 }
