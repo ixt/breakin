@@ -73,8 +73,7 @@ void BreakOut::update(){
         if ( tiles[i] -> collision(ball -> y, ball -> x)){
             if(tiles[i]->isThereEvenAFile)
                 fileSystem->deleteFile(fileSystem->files[tiles[i]->fileNo]);
-            ball -> reflect(tiles[i] -> reflectDirection(ball -> y, ball -> x));
-    
+            ball -> reflect(tiles[i] -> previousDirection);
             tiles.erase(tiles.begin()+i);
             continue;
         }
@@ -83,7 +82,7 @@ void BreakOut::update(){
 
 }
 
-void BreakOut::addTile(int file){
+void BreakOut::addTile(int file, bool isThereEvenAFile){
     int addX = 3 + (rand()%( frameX - 8));
     int addY = 3 + (rand()%( frameY / 2));
     int i = 0;
@@ -95,7 +94,7 @@ void BreakOut::addTile(int file){
          }
       i++;
      }
-    tiles.push_back(new Tile(addY,addX,1+rand()%4,file,true));
+    tiles.push_back(new Tile(addY,addX,1+rand()%4,file,isThereEvenAFile));
 }
 
 void BreakOut::startScreen(){
@@ -125,3 +124,10 @@ void BreakOut::startScreen(){
     attroff(COLOR_PAIR(1));
 }
 
+void BreakOut::successScreen(int casualties){
+       
+}
+
+void BreakOut::dissappointmentScreen(){
+       
+}

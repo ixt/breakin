@@ -36,8 +36,8 @@ int main(){
                     game.fileSystem ->deleteFile(game.fileSystem ->files[0]);
                     break;
             }
-        game.update();
         game.draw();
+        game.update();
 
         if(game.end){
             endwin();

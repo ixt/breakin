@@ -43,6 +43,7 @@ public:
     int length;
     Panel(bool filled, int y, int x, int l);
     void right();
+    void left();
     void draw();
 };
 
@@ -74,7 +75,7 @@ public:
     int col;
     int fileNo;
     bool isThereEvenAFile;
-    Tile(int _y=20, int _x=20, int col=1+(rand()%4),int fileNo=-1,bool isThereEvenAFile=false);
+    Tile(int _y=20, int _x=20, int col=1+(rand()%4),int fileNo=0,bool isThereEvenAFile=false);
     void draw();
     bool collision(int y, int x);
     int previousDirection;

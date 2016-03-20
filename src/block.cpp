@@ -218,11 +218,11 @@ bool Tile::collision(int _y, int _x){
 }
 
 int Tile::reflectDirection(int _y, int _x){
-    if ( _y > y)
+    if ( _y > y && _x <= x+2 && _x > x )
         return 2;
-    if ( _y < y)
+    if ( _y < y && _x <= x+2 && _x > x )
         return 0;
-    if (_y == y && _x < x)
+    if ( _x < x )
         return 3;
     return 1;
 }
