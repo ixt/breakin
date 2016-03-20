@@ -34,10 +34,6 @@ Brick::Brick(bool fill, int y, int x, int h, int w, int COLOR): Block(fill, y, x
 
 Brick::Brick(int y, int x, int COLOR): Block(false, y, x, COLOR), width(10),height(2){}
 
-Brick::~Brick(){
-    //cout << "Rectangle Destroyed" << endl;
-}
-
 void Brick::draw(){ attron(COLOR_PAIR(getColor()));
     int locY = getY();
     int locX = getX();
@@ -63,8 +59,6 @@ void Brick::draw(){ attron(COLOR_PAIR(getColor()));
 
 Circle::Circle(bool fill, int y, int x, int r, int COLOR): Block(fill, y, x,COLOR), radius(r) {
 }
-
-Circle::~Circle(){}
 
 void Circle::draw(){ attron(COLOR_PAIR(getColor()));
     int locY = getY();
@@ -99,8 +93,6 @@ void Circle::draw(){ attron(COLOR_PAIR(getColor()));
 
 Panel::Panel(bool fill, int y, int x, int l): Block(fill,0,0,3), x(x), y(y), length(l) {}
 
-Panel::~Panel(){}
-
 void Panel::draw(){ 
     int col = getColor();
     attron(COLOR_PAIR(col));
@@ -133,13 +125,13 @@ void Ball::draw(){
     }
 
     if ( x >= *frameX-3 || ( x == panel -> x - 1 && y == panel -> y ))
-        reflectRight();
+        reflect(1);
     if ( x <= 2 || ( x == panel -> x + panel -> length + 1 && y == panel -> y ))
-        reflectLeft();
+        reflect(3);
     if ( y <= 1 || ( x >= panel -> x - 1  && x <= panel -> x + panel -> length + 1 && y == panel -> y + 1 && direction != 0))
-        reflectTop();
+        reflect(0);
     if ( y >= *frameY-2 || ( x >= panel -> x - 1 && x <= panel -> x + panel -> length + 1 && y == panel -> y - 1 && moves > 3))
-        reflectBottom();
+        reflect(2);
 
     switch(direction){
         case 1:
@@ -173,8 +165,8 @@ void Ball::draw(){
 }
 
 void Ball::start(){
-        direction = -1;
-        moves++;
+    direction = -1;
+    moves++;
 }
 
 bool Ball::started(){
@@ -183,36 +175,35 @@ bool Ball::started(){
     return false;
 }
 
-void Ball::reflectTop(){
-    if (direction == 1)
-        direction = 2;
-    if (direction == -1)
-        direction = -2;
-}
-
-void Ball::reflectLeft(){
-    if (direction == -1)
-        direction = 1;
-    if (direction == -2)
-        direction = 2;
-}
-void Ball::reflectRight(){
-    if (direction == 1)
-        direction = -1;
-    if (direction == 2)
-        direction = -2;
-}
-void Ball::reflectBottom(){
-    if (direction == -2)
-        direction = -1;
-    if (direction == 2)
-        direction = 1;
+void Ball::reflect(int side){
+    if (side == 0){
+        if (direction == 1)
+            direction = 2;
+        if (direction == -1)
+            direction = -2;
+    }
+    if (side == 3){
+        if (direction == -1)
+            direction = 1;
+        if (direction == -2)
+            direction = 2;
+    }
+    if (side == 1){
+        if (direction == 1)
+            direction = -1;
+        if (direction == 2)
+            direction = -2;
+    }
+    if (side == 2){
+        if (direction == -2)
+            direction = -1;
+        if (direction == 2)
+            direction = 1;
+    }
 }
 
 Tile::Tile(int _y, int _x, int color, int fileNo, bool isThereEvenAFile): Brick(_y, _x,color), col(color), x(_x), y(_y), isThereEvenAFile(isThereEvenAFile), fileNo(fileNo) {
 }
-
-Tile::~Tile(){}
 
 void Tile::draw(){
     attron(COLOR_PAIR(col));
@@ -226,6 +217,12 @@ bool Tile::collision(int _y, int _x){
     return false;
 }
 
-signed int Tile::reflectDirection(int _y, int _x, signed int initialDirection){
-    if ( _y == y && _x >= x && _x <= x + 2)
+int Tile::reflectDirection(int _y, int _x){
+    if ( _y > y)
+        return 2;
+    if ( _y < y)
+        return 0;
+    if (_y == y && _x < x)
+        return 3;
+    return 1;
 }

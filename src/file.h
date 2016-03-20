@@ -20,8 +20,8 @@ class File {
         std::vector<bool> goneFiles;
         void addRandomFile();
         void deleteFile(std::string unfortunateFile);
-        
         void drawFiles(int * frameX);
+
 };
 
 #endif

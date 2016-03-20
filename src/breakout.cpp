@@ -73,10 +73,12 @@ void BreakOut::update(){
         if ( tiles[i] -> collision(ball -> y, ball -> x)){
             if(tiles[i]->isThereEvenAFile)
                 fileSystem->deleteFile(fileSystem->files[tiles[i]->fileNo]);
+            ball -> reflect(tiles[i] -> reflectDirection(ball -> y, ball -> x));
+    
             tiles.erase(tiles.begin()+i);
-
             continue;
         }
+        tiles[i]->previousDirection = tiles[i] -> reflectDirection(ball -> y, ball -> x);
     }
 
 }
