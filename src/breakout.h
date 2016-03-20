@@ -6,6 +6,7 @@
 #include <iostream>
 #include <ncurses.h>
 #include "block.h"
+#include "file.h"
 
 #ifndef BREAKOUT_H
 #define BREAKOUT_H
@@ -14,6 +15,7 @@ class Brick;
 class Panel;
 class Ball;
 class Tile;
+class File;
 
 class BreakOut{
     int maxX;
@@ -29,9 +31,11 @@ public:
     Brick * frameOut;
     Panel * panel;
     Ball * ball;
+    File * fileSystem;
     std::vector<Tile *> tiles;
     void addTile();
     void startScreen();
+    bool end;
 };
 
 #endif

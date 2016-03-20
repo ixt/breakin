@@ -29,11 +29,19 @@ int main(){
                     break;
                 case 'q':
                 case 'Q':
-                    endwin();
-                    return 0;
+                    game.end = true;
+                    break;
+                case 'e':
+                case 'E':
+                    game.fileSystem ->deleteFile(&game.fileSystem ->files[0]);
                     break;
             }
         game.draw();
+
+        if(game.end){
+            endwin();
+            return 0;
+        }
     }
     endwin();
 }

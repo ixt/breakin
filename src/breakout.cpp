@@ -29,6 +29,7 @@ BreakOut::BreakOut(){
     ball = new Ball(frameY-5, frameX/2, 0, panel, &frameX, &frameY, 6);
     frameOut = new Brick(false,  0, 0, frameY, frameX , 2);
     frameIn = new Brick(true, 1, 1, frameY - 2 , frameX - 2 , 6);
+    fileSystem = new File(".", &end);
 
 }
 
@@ -58,15 +59,23 @@ void BreakOut::draw(){
             tiles[i] -> draw();
         }
     ball -> draw();
+    fileSystem -> drawFiles(&frameX);
     
     if(!ball -> started())
         startScreen();
 
+    if(end){
+        endwin();
+    }
 
 }
 
 void BreakOut::update(){
-    
+    int count = 0;
+    while (count != 10 && fileSystem->files.size() != 0){
+        addTile();
+        count++;
+    }   
 }
 
 void BreakOut::addTile(){
