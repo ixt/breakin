@@ -52,7 +52,7 @@ void File::drawFiles(int * frameX){
         counter++;
     }
 }
-void File::deleteFile(std::string * unfortunateFile){
+void File::deleteFile(std::string  unfortunateFile){
     auto strike = [] (std::string& text){
         std::string result;
         for (auto& ch: text) {
@@ -62,7 +62,7 @@ void File::deleteFile(std::string * unfortunateFile){
         text = result;
     };
     for (int i = 0; i < files.size(); i++){
-        if(strcmp(files[i].c_str(),unfortunateFile -> c_str())==0){
+        if(strcmp(files[i].c_str(),unfortunateFile.c_str())==0){
 
             // the code to delete files //////////////////////////////////////////////////
             

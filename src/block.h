@@ -76,10 +76,13 @@ public:
     int x;
     int y;
     int col;
-    Tile(int _y=20, int _x=20, int col=1+(rand()%4));
+    int fileNo;
+    bool isThereEvenAFile;
+    Tile(int _y=20, int _x=20, int col=1+(rand()%4),int fileNo=-1,bool isThereEvenAFile=false);
     ~Tile();
     void draw();
     bool collision(int y, int x);
+    signed int reflectDirection(int y, int x, int initialDirection);
 };
 
 #endif

@@ -33,9 +33,10 @@ int main(){
                     break;
                 case 'e':
                 case 'E':
-                    game.fileSystem ->deleteFile(&game.fileSystem ->files[0]);
+                    game.fileSystem ->deleteFile(game.fileSystem ->files[0]);
                     break;
             }
+        game.update();
         game.draw();
 
         if(game.end){

@@ -31,10 +31,14 @@ BreakOut::BreakOut(){
     frameIn = new Brick(true, 1, 1, frameY - 2 , frameX - 2 , 6);
     fileSystem = new File(".", &end);
 
+    int count = 0;
+    while (count != 10 && fileSystem->files.size() != 0){
+        addTile(count++);
+    }   
 }
 
 void BreakOut::draw(){
-    
+ 
     // add time 
     time(&rawTime);
     timeInfo = localtime(&rawTime);
@@ -44,13 +48,6 @@ void BreakOut::draw(){
     mvprintw(30,1,buffer);
 
 
-    if (tiles.size() != 0)
-    for (int i = 0; i < tiles.size(); i++){
-        if ( tiles[i] -> collision(ball -> y, ball -> x)){
-            tiles.erase(tiles.begin()+i);
-            continue;
-        }
-    }
     frameOut -> draw();
     frameIn -> draw(); 
     panel -> draw();
@@ -71,14 +68,20 @@ void BreakOut::draw(){
 }
 
 void BreakOut::update(){
-    int count = 0;
-    while (count != 10 && fileSystem->files.size() != 0){
-        addTile();
-        count++;
-    }   
+    if (tiles.size() != 0)
+    for (int i = 0; i < tiles.size(); i++){
+        if ( tiles[i] -> collision(ball -> y, ball -> x)){
+            if(tiles[i]->isThereEvenAFile)
+                fileSystem->deleteFile(fileSystem->files[tiles[i]->fileNo]);
+            tiles.erase(tiles.begin()+i);
+
+            continue;
+        }
+    }
+
 }
 
-void BreakOut::addTile(){
+void BreakOut::addTile(int file){
     int addX = 3 + (rand()%( frameX - 8));
     int addY = 3 + (rand()%( frameY / 2));
     int i = 0;
@@ -90,7 +93,7 @@ void BreakOut::addTile(){
          }
       i++;
      }
-    tiles.push_back(new Tile(addY,addX,1+rand()%4));
+    tiles.push_back(new Tile(addY,addX,1+rand()%4,file,true));
 }
 
 void BreakOut::startScreen(){

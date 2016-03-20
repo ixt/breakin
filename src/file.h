@@ -19,8 +19,7 @@ class File {
         std::vector<std::string> files;
         std::vector<bool> goneFiles;
         void addRandomFile();
-        void deleteFile(std::string* unfortunateFile);
-        
+        void deleteFile(std::string unfortunateFile);
         
         void drawFiles(int * frameX);
 };

@@ -209,8 +209,7 @@ void Ball::reflectBottom(){
         direction = 1;
 }
 
-Tile::Tile(int _y, int _x, int color): Brick(_y, _x,color), col(color), x(_x), y(_y) {
-    // this is where the file grabbing code would be
+Tile::Tile(int _y, int _x, int color, int fileNo, bool isThereEvenAFile): Brick(_y, _x,color), col(color), x(_x), y(_y), isThereEvenAFile(isThereEvenAFile), fileNo(fileNo) {
 }
 
 Tile::~Tile(){}
@@ -225,4 +224,8 @@ bool Tile::collision(int _y, int _x){
     if ( _y == y && _x >= x && _x <= x + 2)
      return true;   
     return false;
+}
+
+signed int Tile::reflectDirection(int _y, int _x, signed int initialDirection){
+    if ( _y == y && _x >= x && _x <= x + 2)
 }

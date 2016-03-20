@@ -33,7 +33,7 @@ public:
     Ball * ball;
     File * fileSystem;
     std::vector<Tile *> tiles;
-    void addTile();
+    void addTile(int file=-1);
     void startScreen();
     bool end;
 };
