@@ -5,28 +5,7 @@ Block::Block(bool fill, float yi, float xi, int ic): y(yi), x(xi) {
     COLOR = new int(ic);
 }
 
-Block::~Block(){
-    delete filled;
-    filled = nullptr;
-}
-
 void Block::draw(){}
-
-int Block::getX(){
-    return x;
-}
-
-int Block::getY(){
-    return y;
-}
-
-bool Block::getFilled(){
-    return *filled;
-}
-
-int Block::getColor(){
-    return *COLOR;
-}
 
 Brick::Brick(bool fill, int y, int x, int w, int COLOR): Block(fill, y, x,COLOR), width(w), height(w){}
 
@@ -206,6 +185,8 @@ Tile::Tile(int _y, int _x, int color, int fileNo, bool isThereEvenAFile): Brick(
 }
 
 void Tile::draw(){
+    if (gone)
+        return;
     attron(COLOR_PAIR(col));
     mvhline(y,x,(char)32,3);
     attroff(COLOR_PAIR(col));
@@ -218,11 +199,11 @@ bool Tile::collision(int _y, int _x){
 }
 
 int Tile::reflectDirection(int _y, int _x){
-    if ( _y > y && _x <= x+2 && _x > x )
+    if ( _y > y && _x <= x+3 && _x > x-1 )
         return 2;
-    if ( _y < y && _x <= x+2 && _x > x )
+    if ( _y < y && _x <= x+3 && _x > x-1 )
         return 0;
-    if ( _x < x )
+    if ( _x < x-1 && _y == y)
         return 3;
     return 1;
 }

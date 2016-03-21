@@ -25,7 +25,7 @@ int main(){
                     break;
                 case 'p':
                 case 'P':
-                    game.addTile();
+                    // game.addTile();
                     break;
                 case 'q':
                 case 'Q':
@@ -33,11 +33,11 @@ int main(){
                     break;
                 case 'e':
                 case 'E':
-                    game.fileSystem ->deleteFile(game.fileSystem ->files[0]);
+                    // game.fileSystem ->deleteFile(0);
                     break;
             }
-        game.draw();
         game.update();
+        game.draw();
 
         if(game.end){
             endwin();

@@ -41,8 +41,9 @@ File::File(std::string directoryOfChoice, bool * endGameBool){
         closedir(dir);
         pathLocation++;
     }
-    std::cout << paths -> size();
     goneFiles.resize(paths -> size(),false);
+    std::cout << files.size();
+
 }
 
 void File::drawFiles(int * frameX){
@@ -52,7 +53,9 @@ void File::drawFiles(int * frameX){
         counter++;
     }
 }
-void File::deleteFile(std::string  unfortunateFile){
+void File::deleteFile(int fileToDelete){
+    if (fileToDelete > files.size())
+        return;
     auto strike = [] (std::string& text){
         std::string result;
         for (auto& ch: text) {
@@ -61,19 +64,14 @@ void File::deleteFile(std::string  unfortunateFile){
         }
         text = result;
     };
-    for (int i = 0; i < files.size(); i++){
-        if(strcmp(files[i].c_str(),unfortunateFile.c_str())==0){
-
-            // the code to delete files //////////////////////////////////////////////////
-            
-            // std::remove(files[i].c_str());
-            
-            // end code to delete files //////////////////////////////////////////////////
-            
-            if (!goneFiles[i]){ // if file hasnt already been deleted, then go on!
-                strike(files[i]);
-                goneFiles[i] = true;
-            }
-        }
+    // the code to delete files //////////////////////////////////////////////////
+    
+    std::remove(files[fileToDelete].c_str());
+    
+    // end code to delete files //////////////////////////////////////////////////
+    
+    if (!goneFiles[fileToDelete]){ // if file hasnt already been deleted, then go on!
+        strike(files[fileToDelete]);
+        goneFiles[fileToDelete] = true;
     }
 }

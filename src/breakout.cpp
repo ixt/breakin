@@ -32,8 +32,9 @@ BreakOut::BreakOut(){
     fileSystem = new File(".", &end);
 
     int count = 0;
-    while (count != 10 && fileSystem->files.size() != 0){
-        addTile(count++);
+    while (count != fileSystem->files.size() && fileSystem->files.size() != 0 && count <= 10 ){
+        bool isThereEvenAFile = count >= fileSystem -> files.size() ? false : true ; 
+        addTile(count++, isThereEvenAFile);
     }   
 }
 
@@ -70,19 +71,21 @@ void BreakOut::draw(){
 void BreakOut::update(){
     if (tiles.size() != 0)
     for (int i = 0; i < tiles.size(); i++){
-        if ( tiles[i] -> collision(ball -> y, ball -> x)){
-            if(tiles[i]->isThereEvenAFile)
-                fileSystem->deleteFile(fileSystem->files[tiles[i]->fileNo]);
-            ball -> reflect(tiles[i] -> previousDirection);
-            tiles.erase(tiles.begin()+i);
-            continue;
+        if (!tiles[i]-> gone ){
+            if ( tiles[i] -> collision(ball -> y, ball -> x)){
+                if(tiles[i]->isThereEvenAFile)
+                    fileSystem->deleteFile(i);
+                ball -> reflect(tiles[i] -> previousDirection);
+                tiles[i] -> gone = true;
+                continue;
+            }
+            tiles[i]->previousDirection = tiles[i] -> reflectDirection(ball -> y, ball -> x);
         }
-        tiles[i]->previousDirection = tiles[i] -> reflectDirection(ball -> y, ball -> x);
     }
-
 }
 
 void BreakOut::addTile(int file, bool isThereEvenAFile){
+    srand(time(NULL));
     int addX = 3 + (rand()%( frameX - 8));
     int addY = 3 + (rand()%( frameY / 2));
     int i = 0;
@@ -101,8 +104,6 @@ void BreakOut::startScreen(){
     Circle * circle = new Circle(false,12,30,10,4);
     circle -> draw();
 
-    
-    
     attron(COLOR_PAIR(1));
     mvprintw(5,15, "    ___               __    _     ");
     mvprintw(6,15, "   / _ )_______ ___ _/ /__ (_)__  ");
@@ -114,9 +115,8 @@ void BreakOut::startScreen(){
     attron(COLOR_PAIR(3));
     mvprintw(10,16, " This is a version of Breakout ");
     mvprintw(11,18,  " avoid hitting the blocks ");
-    mvprintw(12,18,  " until the timer runs out ");
-    mvprintw(13,15, " a file will be deleted for each ");
-    mvprintw(14,22,       " block destroyed ");
+    mvprintw(12,15, " a file will be deleted for each ");
+    mvprintw(13,22,       " block destroyed ");
     attroff(COLOR_PAIR(3));
     attron(COLOR_PAIR(1));
     mvprintw(15,19,    " space to start, arrows ");

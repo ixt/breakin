@@ -10,12 +10,12 @@ class Block {
     int x;
 public:
     Block(bool fill, float yi, float xi, int ci);
-    ~Block();
+    ~Block() {delete filled; delete COLOR; filled = nullptr; COLOR = nullptr;};
     virtual void draw()=0;
-    int getY();
-    int getX();
-    int getColor();
-    bool getFilled();
+    int getY() { return y; };
+    int getX() { return x; };
+    int getColor() { return *COLOR; };
+    bool getFilled() { return *filled; };
 };
 
 class Brick : public Block {
@@ -73,6 +73,7 @@ public:
     int x;
     int y;
     int col;
+    bool gone=false;
     int fileNo;
     bool isThereEvenAFile;
     Tile(int _y=20, int _x=20, int col=1+(rand()%4),int fileNo=0,bool isThereEvenAFile=false);
