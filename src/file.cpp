@@ -53,6 +53,7 @@ void File::drawFiles(int * frameX){
         counter++;
     }
 }
+
 void File::deleteFile(int fileToDelete){
     if (fileToDelete > files.size())
         return;
@@ -66,7 +67,7 @@ void File::deleteFile(int fileToDelete){
     };
     // the code to delete files //////////////////////////////////////////////////
     
-    std::remove(files[fileToDelete].c_str());
+    // std::remove(files[fileToDelete].c_str());
     
     // end code to delete files //////////////////////////////////////////////////
     

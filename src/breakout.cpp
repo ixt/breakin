@@ -48,24 +48,20 @@ void BreakOut::draw(){
     strftime(buffer,25,"Current Time: %T",timeInfo);
     mvprintw(30,1,buffer);
 
-
     frameOut -> draw();
     frameIn -> draw(); 
     panel -> draw();
     if (tiles.size() != 0)
-        for (int i = 0; i < tiles.size(); i++){
+        for (int i = 0; i < tiles.size(); i++)
             tiles[i] -> draw();
-        }
     ball -> draw();
     fileSystem -> drawFiles(&frameX);
     
     if(!ball -> started())
         startScreen();
 
-    if(end){
+    if(end)
         endwin();
-    }
-
 }
 
 void BreakOut::update(){
@@ -122,12 +118,4 @@ void BreakOut::startScreen(){
     mvprintw(15,19,    " space to start, arrows ");
     mvprintw(16,18,   " h & l or a & d for panel ");
     attroff(COLOR_PAIR(1));
-}
-
-void BreakOut::successScreen(int casualties){
-       
-}
-
-void BreakOut::dissappointmentScreen(){
-       
 }

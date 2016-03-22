@@ -4,6 +4,7 @@ BreakOut game;
 
 int main(){
     int finished = 0;
+    // Controls 
     int key = ' ';
     while( !finished ){
         int key;
@@ -23,17 +24,9 @@ int main(){
                     if (!game.ball -> started())
                     game.ball -> start(); 
                     break;
-                case 'p':
-                case 'P':
-                    // game.addTile();
-                    break;
                 case 'q':
                 case 'Q':
                     game.end = true;
-                    break;
-                case 'e':
-                case 'E':
-                    // game.fileSystem ->deleteFile(0);
                     break;
             }
         game.update();

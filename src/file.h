@@ -2,14 +2,11 @@
 #include "breakout.h"
 #ifndef FILE_H
 #define FILE_H
-
 #include <cstring>
 #include <sstream>
 #include <iostream>
 #include <fstream>
 #include <dirent.h>
-
-
 
 class File {
     public: 

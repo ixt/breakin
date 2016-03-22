@@ -23,6 +23,7 @@ class BreakOut{
     time_t rawTime;
     struct tm * timeInfo;
 public:
+    bool end;
     void start();
     void draw();
     void update();
@@ -35,9 +36,6 @@ public:
     std::vector<Tile *> tiles;
     void addTile(int file=0,bool isThereEvenAFile=false);
     void startScreen();
-    void successScreen(int casualties);
-    void dissappointmentScreen();
-    bool end;
 };
 
 #endif

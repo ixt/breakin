@@ -5,15 +5,8 @@ Block::Block(bool fill, float yi, float xi, int ic): y(yi), x(xi) {
     COLOR = new int(ic);
 }
 
-void Block::draw(){}
-
-Brick::Brick(bool fill, int y, int x, int w, int COLOR): Block(fill, y, x,COLOR), width(w), height(w){}
-
-Brick::Brick(bool fill, int y, int x, int h, int w, int COLOR): Block(fill, y, x,COLOR), width(w), height(h){}
-
-Brick::Brick(int y, int x, int COLOR): Block(false, y, x, COLOR), width(10),height(2){}
-
-void Brick::draw(){ attron(COLOR_PAIR(getColor()));
+void Brick::draw(){ 
+    attron(COLOR_PAIR(getColor()));
     int locY = getY();
     int locX = getX();
     int col = getColor();
@@ -22,11 +15,9 @@ void Brick::draw(){ attron(COLOR_PAIR(getColor()));
 
 
     if (getFilled()){
-    for(int y = 0; y < height; y++){
-        for(int x = 0; x < width; x++){
-            mvaddch(locY+y,locX+x, (char)32);
-        }
-    }
+        for(int y = 0; y < height; y++)
+            for(int x = 0; x < width; x++)
+                mvaddch(locY+y,locX+x, (char)32);
     } else {
         mvhline(locY,locX,(char)32,width);
         mvhline(endH-1,locX,(char)32,width);
@@ -36,10 +27,9 @@ void Brick::draw(){ attron(COLOR_PAIR(getColor()));
     attroff(COLOR_PAIR(getColor()));
 }
 
-Circle::Circle(bool fill, int y, int x, int r, int COLOR): Block(fill, y, x,COLOR), radius(r) {
-}
-
-void Circle::draw(){ attron(COLOR_PAIR(getColor()));
+void Circle::draw(){ 
+    // Drawing circles in the console is fun, but disappointing
+    attron(COLOR_PAIR(getColor()));
     int locY = getY();
     int locX = getX();
     
@@ -48,9 +38,9 @@ void Circle::draw(){ attron(COLOR_PAIR(getColor()));
     l = (int) radius * cos(M_PI / 4);
 
     if (!getFilled()){
+        // empty circle, draw in quadrents 
         for ( x = 0; x<=l; x++ ){
             y = (int) sqrt((radius * radius) - (x*x));
-            
             mvaddch( locY + y , locX + x , (char)32);
             mvaddch( locY - y , locX + x , (char)32);
             mvaddch( locY - y , locX - x , (char)32);
@@ -61,16 +51,14 @@ void Circle::draw(){ attron(COLOR_PAIR(getColor()));
             mvaddch( locY + x , locX - y , (char)32);
         }
     } else {
+        // filled just put all of the characters down in that radius
         for( y = -radius; y <= radius; y++ )
             for( x = -radius; x <= radius; x++ )
                 if (( x * x ) + ( y * y ) <= ( radius * radius ))
                     mvaddch( locY + y , locX + x , (char)32);
     }
     attroff(COLOR_PAIR(getColor()));
-
 }
-
-Panel::Panel(bool fill, int y, int x, int l): Block(fill,0,0,3), x(x), y(y), length(l) {}
 
 void Panel::draw(){ 
     int col = getColor();
@@ -88,12 +76,6 @@ void Panel::right(){
     int end = x+length;
     if( end != maxX-2 )
         x++;
-}
-
-Ball::Ball(int _y, int _x, signed int d, Panel * player, int * _frameX, int * _frameY, int color): Block(true, _y, _x, 3), direction(d), y(_y), frameX(_frameX), frameY(_frameY), panel(player), col(color){
-    
-    x = panel -> x + (rand()%panel->length);
-
 }
 
 void Ball::draw(){
@@ -134,24 +116,12 @@ void Ball::draw(){
             moves++;
             break;
         case 0:
-
             break;
     }
 
     attron(COLOR_PAIR(col));
     mvaddch(y,x,(char)79);
     attroff(COLOR_PAIR(col));
-}
-
-void Ball::start(){
-    direction = -1;
-    moves++;
-}
-
-bool Ball::started(){
-    if (direction !=0)
-        return true;
-    return false;
 }
 
 void Ball::reflect(int side){
@@ -181,21 +151,12 @@ void Ball::reflect(int side){
     }
 }
 
-Tile::Tile(int _y, int _x, int color, int fileNo, bool isThereEvenAFile): Brick(_y, _x,color), col(color), x(_x), y(_y), isThereEvenAFile(isThereEvenAFile), fileNo(fileNo) {
-}
-
 void Tile::draw(){
     if (gone)
         return;
     attron(COLOR_PAIR(col));
     mvhline(y,x,(char)32,3);
     attroff(COLOR_PAIR(col));
-}
-
-bool Tile::collision(int _y, int _x){
-    if ( _y == y && _x >= x && _x <= x + 2)
-     return true;   
-    return false;
 }
 
 int Tile::reflectDirection(int _y, int _x){

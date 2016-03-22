@@ -22,16 +22,16 @@ class Brick : public Block {
     int width;
     int height;
 public:
-    Brick(bool fill, int y, int x, int w, int COLOR);
-    Brick(bool fill, int y, int x, int h, int w, int COLOR);
-    Brick(int y, int x, int COLOR);
+    Brick(bool fill, int y, int x, int w, int COLOR) : Block (fill, y, x, COLOR), width(w){};
+    Brick(bool fill, int y, int x, int h, int w, int COLOR) : Block (fill, y, x, COLOR), width(w), height(h){};
+    Brick(int y, int x, int COLOR) : Block(false, y, x, COLOR), width(10), height(2){};
     void draw();
 };
 
 class Circle : public Block {
     float radius;
 public:
-    Circle(bool fill, int y, int x, int r, int COLOR);
+    Circle(bool fill, int y, int x, int r, int COLOR) : Block(fill, y, x, COLOR), radius(r){};
     void draw();
 };
 
@@ -41,7 +41,7 @@ public:
     int y;
     int x;
     int length;
-    Panel(bool filled, int y, int x, int l);
+    Panel(bool filled, int y, int x, int l) : Block(filled, 0, 0, 3), x(x), y(y), length(l){};
     void right();
     void left();
     void draw();
@@ -57,10 +57,12 @@ public:
     int x;
     int col;
     int moves;
-    Ball(int _y, int _x, signed int d, Panel * player,int * _frameX, int * _frameY, int color);
-    bool started();
+    Ball(int _y, int _x, signed int d, Panel * player,int * _frameX, int * _frameY, int color) : 
+        Block(true, _y, _x, 3), direction(d), y(_y), frameX(_frameX), frameY(_frameY), panel(player), col(color){
+        x = panel -> x + (rand()%panel->length);};
+    bool started(){bool answer = direction!= 0 ? 1 : 0; return answer;};
     void draw();
-    void start();
+    void start(){direction = -1; moves++;};
     void reflect(int side);
     void reflectTop();
     void reflectBottom();
@@ -75,10 +77,11 @@ public:
     int col;
     bool gone=false;
     int fileNo;
-    bool isThereEvenAFile;
-    Tile(int _y=20, int _x=20, int col=1+(rand()%4),int fileNo=0,bool isThereEvenAFile=false);
+    bool isThereEvenAFile=false;
+    Tile(int _y=20, int _x=20, int color=1+(rand()%4),int fileNo=0,bool isThereEvenAFile=false) :
+            Brick(_y, _x, color), col(color), x(_x), y(_y), isThereEvenAFile(isThereEvenAFile), fileNo(fileNo){};
     void draw();
-    bool collision(int y, int x);
+    bool collision(int _y, int _x){bool answer = (_y == y && _x >= x && _x <= x +2 )? 1 : 0; return answer;};
     int previousDirection;
     int reflectDirection(int y, int x);
 };
