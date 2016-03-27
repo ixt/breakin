@@ -22,5 +22,5 @@ Uses:
     - Delegateing Constructors  
     - Auto & Begin/End Iterators 
     - If/while loops 
-    - Inline functions 
-    - libs: Ncurses, Dirent 
+    - Inline functions   
+    - libs: Ncurses, Dirent   
