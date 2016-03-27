@@ -15,12 +15,12 @@ There is no way to win.
 
 Good Luck
 
-Uses:
-    - Inheritance & virtual functions
-    - Deleted functions
-    - Lamda Expressions
-    - Delegateing Constructors 
-    - Auto & Begin/End Iterators
-    - If/while loops
-    - Inline functions
-    - libs: Ncurses, Dirent
+Uses:  
+    - Inheritance & virtual functions  
+    - Deleted functions   
+    - Lamda Expressions 
+    - Delegateing Constructors  
+    - Auto & Begin/End Iterators 
+    - If/while loops 
+    - Inline functions 
+    - libs: Ncurses, Dirent 
